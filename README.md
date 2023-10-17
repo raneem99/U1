@@ -1,49 +1,46 @@
 import Foundation
-class Complex {
-  var real: Double
-  var imaginary: Double
-  init(real: Double, imaginary: Double) {
-    self.real = real
-    self.imaginary = imaginary
-  }
-  func incrementBy(real: Double) {
-    self.real += real
-  }
-  func incrementBy(imaginary: Double) {
-    self.imaginary += imaginary
-  }
-  func incrementBy(complex: Complex) {
-    self.real += complex.real
-    self.imaginary += complex.imaginary
-  }
-  func multiplyBy(complex: Complex) {
-    let real = self.real * complex.real - self.imaginary * complex.imaginary
-    let imaginary = self.real * complex.imaginary + self.imaginary * complex.real
-    self.real = real
-    self.imaginary = imaginary
-  }
-  func rotateBy(angle: Double) {
-    let real = self.real * cos(angle) - self.imaginary * sin(angle)
-    let imaginary = self.real * sin(angle) + self.imaginary * cos(angle)
-    self.real = real
-    self.imaginary = imaginary
-  }
-  func plus(complex: Complex) -> Complex {
-    return Complex(real: self.real + complex.real, imaginary: self.imaginary + complex.imaginary)
-  }
+
+// Funktion zum Einlesen einer komplexen Zahl von der Konsole
+func readComplex() -> Complex {
+    print("Geben Sie den Realteil ein:")
+    let real = Double(readLine()!) ?? 0.0
+    print("Geben Sie den Imaginärteil ein:")
+    let imaginary = Double(readLine()!) ?? 0.0
+    return Complex(real: real, imaginary: imaginary)
 }
-// Einlesen einer komplexen Zahl über die Konsole.
-print("Bitte geben Sie eine komplexe Zahl in der Form 'a+bi' ein:")
-guard let input = readLine() else {
-  fatalError("Fehler beim Einlesen der Eingabe.")
-}
-// Parsen der Eingabe in eine komplexe Zahl.
-let complex = Complex(input)
-// Ausgabe der komplexen Zahl.
-print("Die eingegebene komplexe Zahl ist \(complex).")
-// Addieren der komplexen Zahl (1.2 + 2.4 i).
-complex.incrementBy(complex: Complex(real: 1.2, imaginary: 2.4))
-// Ausgabe der komplexen Zahl.
-print("Die komplexe Zahl nach dem Addieren von (1.2 + 2.4 i) ist \(complex).")
-// Erhöhen des Realteils um 2.2.
-complex.incrementBy(real: 2.2)
+
+// Einlesen einer komplexen Zahl von der Konsole
+print("Bitte geben Sie eine komplexe Zahl ein:")
+var complexNumber = readComplex()
+
+// Ausgabe zur Kontrolle
+print("Eingegebene komplexe Zahl: \(complexNumber.real) + \(complexNumber.imaginary)i")
+
+// Konstante komplexe Zahl (1.2 + 2.4i)
+let addComplex = Complex(real: 1.2, imaginary: 2.4)
+
+// Addieren der konstanten komplexen Zahl
+complexNumber = complexNumber.plus(addComplex)
+print("Nach Addition mit (1.2 + 2.4i): \(complexNumber.real) + \(complexNumber.imaginary)i")
+
+// Erhöhen des Realteils um 2.2
+complexNumber.incrementBy(realIncrement: 2.2)
+print("Nach Erhöhung des Realteils um 2.2: \(complexNumber.real) + \(complexNumber.imaginary)i")
+
+// Erhöhen des Imaginärteils um 0.6
+complexNumber.incrementBy(imaginaryIncrement: 0.6)
+print("Nach Erhöhung des Imaginärteils um 0.6: \(complexNumber.real) + \(complexNumber.imaginary)i")
+
+// Multiplizieren mit (0.5 + 1.0i)
+let multiplyComplex = Complex(real: 0.5, imaginary: 1.0)
+complexNumber.multiplyBy(complex: multiplyComplex)
+print("Nach Multiplikation mit (0.5 + 1.0i): \(complexNumber.real) + \(complexNumber.imaginary)i")
+
+// Rotieren um den Winkel pi (Double.pi)
+complexNumber.rotateBy(angle: Double.pi)
+print("Nach Rotation um pi: \(complexNumber.real) + \(complexNumber.imaginary)i")
+
+// Berechnen der Summe mit (0.2 + 0.9i)
+let sumComplex = Complex(real: 0.2, imaginary: 0.9)
+let result = complexNumber.plus(sumComplex)
+print("Die Summe mit (0.2 + 0.9i) ist: \(result.real) + \(result.imaginary)i")
